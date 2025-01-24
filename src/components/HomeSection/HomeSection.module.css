@@ -1,0 +1,56 @@
+.homeSectionrapp {
+  max-width: 720px;
+  padding: 98px 108px 98px 64px;
+  border-radius: 30px;
+  background: #f8f8f8;
+}
+
+.homeSectionTitle {
+  max-width: 548px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.16667;
+  letter-spacing: -0.02em;
+  color: #121417;
+  margin-bottom: 32px;
+}
+
+.homeSectionSpan {
+  font-style: italic;
+  font-weight: 400;
+  background-color: #f4c8ba;
+  border-radius: 8px;
+}
+
+.homeSectionText {
+  max-width: 471px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  letter-spacing: -0.02em;
+  color: #121417;
+  margin-bottom: 64px;
+}
+
+.btnGetStarted {
+  display: inline-flex;
+  padding: 16px 88px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #f0aa8d;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.55556;
+  color: #121417;
+  border: none;
+  transition: background-color 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.btnGetStarted:hover,
+.btnGetStarted:focus {
+  background-color: #f4c8ba;
+}

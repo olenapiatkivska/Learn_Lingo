@@ -1,0 +1,17 @@
+.containerNotFound {
+  text-align: center;
+  margin-top: 100px;
+}
+.headerNotFound {
+  font-size: 96px;
+  margin: 0;
+}
+.textNotFound {
+  font-size: 24px;
+  margin: 20px 0;
+}
+.linkNotFound {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 19px;
+}
