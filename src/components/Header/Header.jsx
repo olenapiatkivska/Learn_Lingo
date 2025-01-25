@@ -10,24 +10,24 @@ import { ToastContainer } from 'react-toastify';
 import { auth } from '../../services/firebaseConfig.js';
 
 const Header = () => {
-  //   const [isRegisterOpen, setRegisterOpen] = useState(false);
-  //   const [isLoginOpen, setLoginOpen] = useState(false);
-  //   const [currentUser, setCurrentUser] = useState(null);
+  const [isRegisterOpen, setRegisterOpen] = useState(false);
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  //   const handleRegisterSuccess = user => {
-  //     setRegisterOpen(false);
-  //     setCurrentUser(user);
-  //   };
+  const handleRegisterSuccess = user => {
+    setRegisterOpen(false);
+    setCurrentUser(user);
+  };
 
-  //   const handleLoginSuccess = user => {
-  //     setLoginOpen(false);
-  //     setCurrentUser(user);
-  //   };
+  const handleLoginSuccess = user => {
+    setLoginOpen(false);
+    setCurrentUser(user);
+  };
 
-  //   const handleLogout = () => {
-  //     auth.signOut();
-  //     setCurrentUser(null);
-  //   };
+  const handleLogout = () => {
+    auth.signOut();
+    setCurrentUser(null);
+  };
 
   return (
     <Container>
@@ -91,7 +91,7 @@ const Header = () => {
             <button onClick={handleLogout}>Log Out</button>
           )}
 
-          {/* <Modal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)}>
+          <Modal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)}>
             <RegistrationForm
               onClose={() => setRegisterOpen(false)}
               onRegisterSuccess={handleRegisterSuccess}
@@ -103,7 +103,7 @@ const Header = () => {
               onClose={() => setLoginOpen(false)}
               onLoginSuccess={handleLoginSuccess}
             />
-          </Modal> */}
+          </Modal>
 
           <ToastContainer />
         </div>

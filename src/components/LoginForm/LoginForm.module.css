@@ -1,0 +1,71 @@
+.loginFormTitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #121417;
+  margin-bottom: 20px;
+}
+
+.loginFormText {
+  max-width: 438px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  color: rgba(18, 20, 23, 0.8);
+  margin-bottom: 40px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.loginFormInput {
+  padding: 16px 18px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.38;
+  color: #121417;
+}
+
+.loginFormInput::placeholder {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.38;
+  color: #121417;
+}
+
+.loginFormBtn {
+  display: block;
+  padding: 16px 180px;
+  border-radius: 12px;
+  background-color: #f0aa8d;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.55556;
+  color: #121417;
+  border: none;
+  transition: background-color 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  margin-top: 22px;
+}
+
+.loginFormBtn:hover,
+.loginFormBtn:focus {
+  background-color: #f4c8ba;
+}
+
+.error {
+  font-size: 14px;
+  color: red;
+}
