@@ -6,7 +6,7 @@ import css from './Header.module.css';
 import Modal from '../../shared/Modal/Modal.jsx';
 import LoginForm from '../LoginForm/LoginForm.jsx';
 import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx';
-import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { auth } from '../../services/firebaseConfig.js';
 
 const Header = () => {
@@ -26,6 +26,7 @@ const Header = () => {
 
   const handleLogout = () => {
     auth.signOut();
+    toast.success('Logout successful!');
     setCurrentUser(null);
   };
 
@@ -88,7 +89,9 @@ const Header = () => {
               </button>
             </div>
           ) : (
-            <button onClick={handleLogout}>Log Out</button>
+            <button className={css.btnLogOut} onClick={handleLogout}>
+              Log Out
+            </button>
           )}
 
           <Modal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)}>
@@ -104,9 +107,8 @@ const Header = () => {
               onLoginSuccess={handleLoginSuccess}
             />
           </Modal>
-
-          <ToastContainer />
         </div>
+        {/* <ToastContainer /> */}
       </header>
     </Container>
   );

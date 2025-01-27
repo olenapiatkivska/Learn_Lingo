@@ -102,3 +102,27 @@
   background-color: #f0aa8d;
   color: #121417;
 }
+
+.btnLogOut {
+  display: flex;
+  padding: 14px 39px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: #121417;
+  border: none;
+
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #fff;
+  transition: background-color 250ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    color 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.btnLogOut:hover,
+.btnLogOut:focus {
+  background-color: #f0aa8d;
+  color: #121417;
+}

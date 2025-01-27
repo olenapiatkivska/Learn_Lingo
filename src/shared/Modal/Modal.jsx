@@ -13,10 +13,14 @@ const Modal = ({ isOpen, onClose, children }) => {
 
     if (isOpen) {
       window.addEventListener('keydown', handleKeyDown);
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
+      document.body.classList.remove('modal-open');
     };
   }, [isOpen, onClose]);
 

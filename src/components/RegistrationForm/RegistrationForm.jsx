@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/firebaseConfig.js';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import css from './RegistrationForm.module.css';
 
 const schema = yup.object().shape({
@@ -24,6 +23,14 @@ const schema = yup.object().shape({
 });
 
 const RegistrationForm = ({ onClose }) => {
+  useEffect(() => {
+    document.body.classList.add('modal-open');
+
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -36,17 +43,11 @@ const RegistrationForm = ({ onClose }) => {
 
   const onSubmit = async data => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password,
-      );
-      console.log('User created:', userCredential.user);
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
       toast.success('Registration successful!');
       reset();
       onClose();
     } catch (error) {
-      console.error('Error creating user:', error.message);
       setError('Failed to register. Please try again.');
     }
   };

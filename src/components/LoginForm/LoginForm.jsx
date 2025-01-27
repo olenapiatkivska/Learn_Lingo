@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import css from './LoginForm.module.css';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/firebaseConfig.js';
@@ -38,7 +38,6 @@ const LoginForm = ({ onLoginSuccess }) => {
         data.email,
         data.password,
       );
-      console.log('User logged in (LoginForm):', userCredential.user);
       toast.success('Log In successful!');
       onLoginSuccess(userCredential.user);
     } catch (e) {
@@ -83,10 +82,9 @@ const LoginForm = ({ onLoginSuccess }) => {
           type="submit"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Logging In...' : 'Log In'}
+          Log In
         </button>
       </form>
-      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 };
