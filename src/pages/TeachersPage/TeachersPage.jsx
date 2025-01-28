@@ -12,13 +12,16 @@ const TeachersPage = () => {
   const [teachers, setTeachers] = useState([]);
   const [count, setCount] = useState(TEACHERS_PER_PAGE);
   const dbRef = ref(database);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function fetchTeachers() {
       try {
+        setIsLoading(true);
         const data = await get(child(dbRef, TEACHERS_COLLECTION));
         if (data.exists()) {
           setTeachers(data.val());
+          setIsLoading(false);
         } else {
           console.log('No data available for teachers');
         }
@@ -46,7 +49,7 @@ const TeachersPage = () => {
             type="button"
             onClick={handleMoreButtonClick}
           >
-            Load more
+            {isLoading ? 'Loading...' : 'Load more'}
           </button>
         )}
       </Container>

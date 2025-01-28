@@ -1,11 +1,33 @@
 import css from './TeachersList.module.css';
 import Icon from '../../shared/Icon.jsx';
 import TeacherLevels from '../TeacherLevels/TeacherLevels.jsx';
-
 import { GoBook } from 'react-icons/go';
 import Container from '../Container/Container.jsx';
+import { useState } from 'react';
+import TeacherDetails from '../TeacherDetails/TeacherDetails.jsx';
+import Modal from '../../shared/Modal/Modal.jsx';
+import BookLesson from '../FormBookLesson/BookLesson.jsx';
 
 const TeachersList = ({ item }) => {
+  const [visibility, setVisibility] = useState({});
+  const [teacher, setTeacher] = useState();
+  const [modalState, setModalState] = useState({ isOpen: false, name: '' });
+
+  const openModal = modalName => {
+    setModalState({ isOpen: true, name: modalName });
+  };
+
+  const closeModal = () => {
+    setModalState({ isOpen: false, name: '' });
+  };
+
+  const onClickModal = id => {
+    const detailsTeacher = item.find(teacher => teacher.id === id);
+    setTeacher(detailsTeacher); // Зберігаємо деталі викладача
+    openModal('bookLesson'); // Відкриваємо модальне вікно для бронювання уроку
+    setVisibility({ ...visibility, [id]: false }); // Закриваємо деталі
+  };
+
   return (
     <section className={css.teachersListSection}>
       <Container>
@@ -48,15 +70,6 @@ const TeachersList = ({ item }) => {
                           </span>
                         </p>
                       </li>
-                      {/* <li className={css.teachersRatingItem}>
-                      <Icon
-                        id="favorite"
-                        className={css.iconFavorite}
-                        width="26"
-                        height="26"
-                        ariaLabel="Favorite"
-                      />
-                    </li> */}
                     </ul>
                     <Icon
                       id="favorite"
@@ -96,16 +109,44 @@ const TeachersList = ({ item }) => {
                     </li>
                   </ul>
 
-                  <button className={css.buttonReadMore} type="button">
-                    Read more
-                  </button>
+                  {!visibility[teacher.id] && (
+                    <button
+                      className={css.buttonReadMore}
+                      type="button"
+                      onClick={() => {
+                        setVisibility({ ...visibility, [teacher.id]: true });
+                      }}
+                    >
+                      Read more
+                    </button>
+                  )}
+
+                  {visibility[teacher.id] && (
+                    <TeacherDetails teacher={teacher} />
+                  )}
 
                   <TeacherLevels levels={teacher.levels} />
+
+                  {visibility[teacher.id] && (
+                    <button
+                      className={css.buttonBookTrialLesson}
+                      type="button"
+                      onClick={() => onClickModal(teacher.id)}
+                    >
+                      Book trial lesson
+                    </button>
+                  )}
                 </div>
               </li>
             );
           })}
         </ul>
+
+        {modalState.isOpen && modalState.name === 'bookLesson' && (
+          <Modal isOpen={modalState.isOpen} onClose={closeModal}>
+            <BookLesson teacher={teacher} />
+          </Modal>
+        )}
       </Container>
     </section>
   );

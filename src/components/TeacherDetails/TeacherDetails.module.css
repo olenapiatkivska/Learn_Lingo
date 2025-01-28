@@ -1,0 +1,48 @@
+.teacherDetailsText {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+  margin-bottom: 32px;
+}
+
+.teacherDetailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.teacherDetailsImgWrapp {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.teacherDetailsImg {
+  border-radius: 100px;
+}
+
+.teacherDetailsName {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #8a8a89;
+}
+
+.teacherDetailsRating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.teacherDetailsComment {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+}
