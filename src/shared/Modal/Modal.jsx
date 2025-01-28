@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
-import css from './Modal.module.css';
 import { useEffect } from 'react';
 import Icon from '../Icon.jsx';
+import css from './Modal.module.css';
 
 const Modal = ({ isOpen, onClose, children }) => {
   useEffect(() => {
@@ -35,14 +35,13 @@ const Modal = ({ isOpen, onClose, children }) => {
     >
       <div className={css.modal}>
         <button className={css.closeButton} onClick={onClose}>
-          ×
-          {/* <Icon
+          <Icon
             id="close"
             className={css.closeIcon}
-            width={32}
-            height={32}
+            width="26"
+            height="26"
             ariaLabel="Close button"
-          /> */}
+          />
         </button>
         {children}
       </div>

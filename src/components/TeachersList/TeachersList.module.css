@@ -1,14 +1,22 @@
+.teachersListSection {
+  max-width: 1184px;
+  padding-left: 64px;
+  padding-right: 64px;
+}
+
 .teachersList {
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-bottom: 64px;
 }
 
 .teachersListItem {
   display: flex;
-  width: 1184px;
   padding: 24px;
   align-items: flex-start;
+  max-width: 100%;
   gap: 48px;
   border-radius: 24px;
   background-color: #fff;
@@ -18,7 +26,7 @@
   width: 96px;
   padding: 12px;
   border-radius: 100px;
-  border: 3px solid #fbe9ba;
+  border: 3px solid #f0aa8d;
   background-color: #fff;
   overflow: hidden;
 }
@@ -28,4 +36,110 @@
   border-radius: 100px;
   width: 100%;
   height: 100%;
+}
+
+.teachersDescription {
+}
+
+.teachersLanguagesWrapp {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.teachersRatingList {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-right: 64px;
+}
+
+.teachersRatingItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+  padding-right: 16px;
+}
+
+.teachersRatingItem:not(:last-child) {
+  border-right: 1px solid rgba(18, 20, 23, 0.2);
+}
+
+.teachersLanguagesText {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #8a8a89;
+  margin-right: auto;
+}
+
+.teachersPrice {
+  color: #38cd3e;
+}
+
+.iconBookOpen {
+  width: 16px;
+  height: 16px;
+}
+
+.iconRating {
+  fill: #ffc531;
+}
+
+.teachersListName {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1;
+  color: #121417;
+  margin-bottom: 32px;
+}
+
+.teachersListTextList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.teachersListText {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+}
+.teachersListSpan {
+  color: #8a8a89;
+}
+
+.iconFavorite {
+  fill: none;
+  stroke: black;
+}
+
+.buttonReadMore {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: underline;
+  color: #121417;
+  border: none;
+  background-color: transparent;
+  margin-top: 16px;
+  margin-bottom: 32px;
+  transition: color 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.buttonReadMore:hover,
+.buttonReadMore:focus {
+  color: #f0aa8d;
 }

@@ -29,6 +29,12 @@
   cursor: pointer;
 }
 
-/* .closeIcon {
-  stroke: black;
-} */
+.closeIcon {
+  fill: #121417;
+
+  transition: fill 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.closeButton:hover .closeIcon {
+  fill: #f0aa8d;
+}

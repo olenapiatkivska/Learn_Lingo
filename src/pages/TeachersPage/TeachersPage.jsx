@@ -39,10 +39,13 @@ const TeachersPage = () => {
   return (
     <section className={css.teachersPage}>
       <Container>
-        <h2>Teachers Page</h2>
         <TeachersList item={limitedTeachers} />
         {count <= teachers.length && (
-          <button type="button" onClick={handleMoreButtonClick}>
+          <button
+            className={css.teachersPageLoadMore}
+            type="button"
+            onClick={handleMoreButtonClick}
+          >
             Load more
           </button>
         )}
