@@ -7,11 +7,18 @@ import { useState } from 'react';
 import TeacherDetails from '../TeacherDetails/TeacherDetails.jsx';
 import Modal from '../../shared/Modal/Modal.jsx';
 import BookLesson from '../FormBookLesson/BookLesson.jsx';
+import { auth, database } from '../../services/firebaseConfig.js';
+import { ref, remove, set } from 'firebase/database';
+import { toast } from 'react-toastify';
+import { useFavorite } from '../../services/favorite.js';
+import { LuHeart } from 'react-icons/lu';
 
 const TeachersList = ({ item }) => {
   const [visibility, setVisibility] = useState({});
   const [teacher, setTeacher] = useState();
   const [modalState, setModalState] = useState({ isOpen: false, name: '' });
+  const authUser = auth.currentUser;
+  const favorite = useFavorite(database);
 
   const openModal = modalName => {
     setModalState({ isOpen: true, name: modalName });
@@ -23,9 +30,36 @@ const TeachersList = ({ item }) => {
 
   const onClickModal = id => {
     const detailsTeacher = item.find(teacher => teacher.id === id);
-    setTeacher(detailsTeacher); // Зберігаємо деталі викладача
-    openModal('bookLesson'); // Відкриваємо модальне вікно для бронювання уроку
-    setVisibility({ ...visibility, [id]: false }); // Закриваємо деталі
+    setTeacher(detailsTeacher);
+    openModal('bookLesson');
+    setVisibility({ ...visibility, [id]: false });
+  };
+
+  const deleteFavorite = id => {
+    const favRef = ref(database, `/favorite/${auth.currentUser.uid}/${id}`);
+    return remove(favRef);
+  };
+
+  const addFavorite = id => {
+    const favoriteTeacher = item.find(teacher => teacher.id === id);
+
+    const userRef = ref(database, `/favorite/${auth.currentUser.uid}/${id}`);
+
+    set(userRef, favoriteTeacher);
+  };
+
+  const handelClick = id => {
+    if (!authUser) {
+      toast.warning('This feature is available only for authorized users.');
+    }
+
+    const isFavorite = favorite.find(item => item.id === id);
+
+    if (isFavorite) {
+      return deleteFavorite(id);
+    } else {
+      return addFavorite(id);
+    }
   };
 
   return (
@@ -71,13 +105,20 @@ const TeachersList = ({ item }) => {
                         </p>
                       </li>
                     </ul>
-                    <Icon
-                      id="favorite"
-                      className={css.iconFavorite}
-                      width="26"
-                      height="26"
-                      ariaLabel="Favorite"
-                    />
+
+                    <button
+                      type="button"
+                      className={css.favoriteButton}
+                      onClick={() => handelClick(teacher.id)}
+                    >
+                      <LuHeart
+                        className={`${css.iconFavorite} ${
+                          favorite.some(fav => fav.id === teacher.id)
+                            ? css.iconFavoriteActive
+                            : ''
+                        }`}
+                      />
+                    </button>
                   </div>
 
                   <p className={css.teachersListName}>
