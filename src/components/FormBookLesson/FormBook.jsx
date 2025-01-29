@@ -1,20 +1,21 @@
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { ref, push } from 'firebase/database';
+import { auth } from '../../services/firebaseConfig.js';
+import { database } from '../../services/firebaseConfig.js';
 
-import css from './BookLesson.jsx';
-import { toast } from 'react-toastify';
-
-const schemaBook = yup.object().shape({
-  fullName: yup.string().min(3).max(50).required('Full name is required'),
+const schema = yup.object().shape({
+  reason: yup.string().required('Please select a reason'),
+  fullName: yup.string().required('Full Name is required'),
   email: yup
     .string()
     .email('Invalid email format')
     .required('Email is required'),
-  number: yup
+  phone: yup
     .string()
-    .min(17, 'Number must be at least 17 characters')
-    .required('Number is required'),
+    .matches(/^\+?\d{10,14}$/, 'Invalid phone number')
+    .required('Phone number is required'),
 });
 
 const FormBook = () => {
@@ -23,56 +24,78 @@ const FormBook = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schemaBook),
+    resolver: yupResolver(schema),
   });
 
-  const onSubmit = data => {
-    console.log(data);
-    toast.success('Форма відправлена успішно!');
+  const onSubmit = async data => {
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert('Будь ласка, увійдіть у систему, щоб забронювати урок.');
+      return;
+    }
+
+    try {
+      const userBookingsRef = ref(database, `users/${user.uid}/bookings`);
+      await push(userBookingsRef, data);
+
+      alert('Запис успішний!');
+    } catch (error) {
+      console.error('Помилка запису:', error);
+      alert('Помилка бронювання, спробуйте ще раз.');
+    }
   };
 
   return (
-    <>
-      <h3>What is your main reason for learning English?</h3>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <h2>Book trial lesson</h2>
+      <p>Оберіть основну причину вивчення англійської:</p>
 
-      <form className={css.formBook} onSubmit={handleSubmit(onSubmit)}>
+      <label>
         <input
-          className={css.formBookInput}
-          type="text"
-          {...register('fullName')}
-          placeholder="Full Name"
+          type="radio"
+          value="Career and business"
+          {...register('reason')}
         />
-        {errors.text && <p className={css.error}>{errors.text.message}</p>}
-
+        Career and business
+      </label>
+      <label>
+        <input type="radio" value="Lesson for kids" {...register('reason')} />
+        Lesson for kids
+      </label>
+      <label>
+        <input type="radio" value="Living abroad" {...register('reason')} />
+        Living abroad
+      </label>
+      <label>
         <input
-          className={css.formBookInput}
-          type="email"
-          {...register('email')}
-          placeholder="Email"
+          type="radio"
+          value="Exams and coursework"
+          {...register('reason')}
         />
-        {errors.email && <p className={css.error}>{errors.email.message}</p>}
-
+        Exams and coursework
+      </label>
+      <label>
         <input
-          className={css.formBookInput}
-          type="tel"
-          {...register('number')}
-          placeholder="Phone number"
+          type="radio"
+          value="Culture, travel or hobby"
+          {...register('reason')}
         />
-        {errors.password && (
-          <p className={css.error}>{errors.number.message}</p>
-        )}
+        Culture, travel or hobby
+      </label>
+      <p>{errors.reason?.message}</p>
 
-        {/* {error && <p className={css.error}>{error}</p>} */}
+      <input type="text" placeholder="Full Name" {...register('fullName')} />
+      <p>{errors.fullName?.message}</p>
 
-        <button
-          className={css.formBookBtn}
-          type="submit"
-          //   disabled={isSubmitting}
-        >
-          Book
-        </button>
-      </form>
-    </>
+      <input type="email" placeholder="Email" {...register('email')} />
+      <p>{errors.email?.message}</p>
+
+      <input type="tel" placeholder="Phone number" {...register('phone')} />
+      <p>{errors.phone?.message}</p>
+
+      <button type="submit">Book</button>
+    </form>
   );
 };
 

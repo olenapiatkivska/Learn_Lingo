@@ -24,14 +24,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="teachers" element={<TeachersPage />} />
-            <Route
-              path="favorite"
-              element={
-                // <PrivateRoute>
-                <FavoritesPage />
-                // </PrivateRoute>
-              }
-            />
+            <Route path="favorites" element={<FavoritesPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
