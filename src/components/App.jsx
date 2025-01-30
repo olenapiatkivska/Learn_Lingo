@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react';
-import Loader from './Loader/Loader.jsx';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from './Loader/Loader.jsx';
 
 const Layout = lazy(() => import('./Layout.jsx'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage.jsx'));

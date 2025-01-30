@@ -1,34 +1,56 @@
 import { NavLink } from 'react-router-dom';
 import Container from '../Container/Container.jsx';
 import Icon from '../../shared/Icon.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import css from './Header.module.css';
 import Modal from '../../shared/Modal/Modal.jsx';
 import LoginForm from '../LoginForm/LoginForm.jsx';
 import RegistrationForm from '../RegistrationForm/RegistrationForm.jsx';
 import { toast } from 'react-toastify';
 import { auth } from '../../services/firebaseConfig.js';
+import { signOut } from 'firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteToken } from '../../redux/SliceAuth.js';
 
 const Header = () => {
   const [isRegisterOpen, setRegisterOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const authUser = useSelector(state => state.authUser.token);
+  const dispatch = useDispatch();
   const [isLoginOpen, setLoginOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
 
   const handleRegisterSuccess = user => {
     setRegisterOpen(false);
-    setCurrentUser(user);
+    setUser(user);
   };
 
   const handleLoginSuccess = user => {
     setLoginOpen(false);
-    setCurrentUser(user);
+    setUser(user);
   };
 
-  const handleLogout = () => {
-    auth.signOut();
-    toast.success('Logout successful!');
-    setCurrentUser(null);
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast.success('Logout successful!');
+      setUser(null);
+      dispatch(deleteToken());
+    } catch (error) {
+      toast.error('Logout failed. Try again.');
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    auth.onAuthStateChanged(maybeUser => {
+      const user = auth.currentUser;
+
+      if (authUser || user) {
+        return setUser(maybeUser);
+      }
+      return;
+    });
+  }, [authUser]);
 
   return (
     <Container>
@@ -44,7 +66,6 @@ const Header = () => {
             />
             <p className={css.textLogo}>LearnLingo</p>
           </NavLink>
-
           <nav className={css.headerNav}>
             <NavLink
               className={({ isActive }) =>
@@ -74,7 +95,7 @@ const Header = () => {
             </NavLink>
           </nav>
 
-          {!currentUser ? (
+          {!user ? (
             <div className={css.btnHeader}>
               <button
                 className={css.btnLogIn}
@@ -102,14 +123,12 @@ const Header = () => {
               Log Out
             </button>
           )}
-
           <Modal isOpen={isRegisterOpen} onClose={() => setRegisterOpen(false)}>
             <RegistrationForm
               onClose={() => setRegisterOpen(false)}
               onRegisterSuccess={handleRegisterSuccess}
             />
           </Modal>
-
           <Modal isOpen={isLoginOpen} onClose={() => setLoginOpen(false)}>
             <LoginForm
               onClose={() => setLoginOpen(false)}

@@ -13,7 +13,10 @@ const FavoritesPage = () => {
         <TeachersList item={favorite} />
 
         {favorite.length === 0 && (
-          <p className={css.noFavorites}>No favorite teachers yet.</p>
+          <p className={css.noFavorites}>
+            No favorite teachers yet. <br />
+            Access for authorized users only.
+          </p>
         )}
       </Container>
     </section>

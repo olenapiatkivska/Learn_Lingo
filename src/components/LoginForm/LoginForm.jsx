@@ -3,10 +3,12 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import css from './LoginForm.module.css';
 import { toast } from 'react-toastify';
-
+import { FiEyeOff, FiEye } from 'react-icons/fi';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/firebaseConfig.js';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToken } from '../../redux/SliceAuth.js';
 
 const schema = yup.object().shape({
   email: yup
@@ -19,7 +21,10 @@ const schema = yup.object().shape({
     .required('Password is required'),
 });
 
-const LoginForm = ({ onLoginSuccess }) => {
+const LoginForm = ({ onClose }) => {
+  const [visibility, setVisibility] = useState(false);
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -27,24 +32,21 @@ const LoginForm = ({ onLoginSuccess }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(null);
 
   const onSubmit = async data => {
-    setIsSubmitting(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         data.email,
         data.password,
       );
+      dispatch(addToken(userCredential.user.accessToken));
       toast.success('Log In successful!');
-      onLoginSuccess(userCredential.user);
+      onClose();
+      return userCredential.user;
     } catch (e) {
-      setError('Invalid email or password. Please try again.');
       toast.error('Invalid credentials. Try again!');
-    } finally {
-      setIsSubmitting(false);
+      console.error(e);
     }
   };
 
@@ -65,22 +67,34 @@ const LoginForm = ({ onLoginSuccess }) => {
         />
         {errors.email && <p className={css.error}>{errors.email.message}</p>}
 
-        <input
-          className={css.loginFormInput}
-          type="password"
-          {...register('password')}
-          placeholder="Password"
-        />
+        <div className={css.inputWrapper}>
+          <input
+            className={css.loginFormInput}
+            type={visibility ? 'text' : 'password'}
+            {...register('password')}
+            placeholder="Password"
+          />
+          <button
+            className={css.loginFormBtnEye}
+            type="button"
+            onClick={() => setVisibility(!visibility)}
+          >
+            {visibility ? (
+              <FiEyeOff className={css.eyeIcon} />
+            ) : (
+              <FiEye className={css.eyeIcon} />
+            )}
+          </button>
+        </div>
+
         {errors.password && (
           <p className={css.error}>{errors.password.message}</p>
         )}
 
-        {error && <p className={css.error}>{error}</p>}
-
         <button
           className={css.loginFormBtn}
           type="submit"
-          disabled={isSubmitting}
+          // disabled={isSubmitting}
         >
           Log In
         </button>

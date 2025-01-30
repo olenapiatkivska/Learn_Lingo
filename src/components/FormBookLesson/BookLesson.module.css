@@ -1,0 +1,50 @@
+.bookLessonTitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #121417;
+  margin-bottom: 20px;
+}
+
+.bookLessonText {
+  max-width: 472px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.375;
+  color: rgba(18, 20, 23, 0.8);
+  margin-bottom: 20px;
+}
+
+.bookLessonImgWrapp {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+}
+
+.bookLessonImg {
+  border-radius: 100px;
+}
+
+.bookLessonTeacherWrapp {
+}
+
+.bookLessonTeacher {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  color: #8a8a89;
+  margin-bottom: 4px;
+}
+
+.bookLessonTeacherName {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #121417;
+}

@@ -6,6 +6,9 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/firebaseConfig.js';
 import { toast } from 'react-toastify';
 import css from './RegistrationForm.module.css';
+import { useDispatch } from 'react-redux';
+import { addToken } from '../../redux/SliceAuth.js';
+import { FiEyeOff, FiEye } from 'react-icons/fi';
 
 const schema = yup.object().shape({
   name: yup
@@ -23,6 +26,9 @@ const schema = yup.object().shape({
 });
 
 const RegistrationForm = ({ onClose }) => {
+  const [visibility, setVisibility] = useState(false);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     document.body.classList.add('modal-open');
 
@@ -35,7 +41,6 @@ const RegistrationForm = ({ onClose }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -43,12 +48,17 @@ const RegistrationForm = ({ onClose }) => {
 
   const onSubmit = async data => {
     try {
-      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+      dispatch(addToken(userCredential.user.accessToken));
       toast.success('Registration successful!');
-      reset();
       onClose();
     } catch (error) {
       setError('Failed to register. Please try again.');
+      console.error(error);
     }
   };
 
@@ -75,12 +85,25 @@ const RegistrationForm = ({ onClose }) => {
           placeholder="Email"
         />
         {errors.email && <p className={css.error}>{errors.email.message}</p>}
-        <input
-          className={css.registrationInput}
-          type="password"
-          {...register('password')}
-          placeholder="Password"
-        />
+        <div className={css.inputWrapper}>
+          <input
+            className={css.registrationInput}
+            type={visibility ? 'text' : 'password'}
+            {...register('password')}
+            placeholder="Password"
+          />
+          <button
+            className={css.registrFormBtnEye}
+            type="button"
+            onClick={() => setVisibility(!visibility)}
+          >
+            {visibility ? (
+              <FiEyeOff className={css.eyeIconRegistr} />
+            ) : (
+              <FiEye className={css.eyeIconRegistr} />
+            )}
+          </button>
+        </div>
         {errors.password && (
           <p className={css.error}>{errors.password.message}</p>
         )}

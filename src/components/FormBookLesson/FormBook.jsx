@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { ref, push } from 'firebase/database';
 import { auth } from '../../services/firebaseConfig.js';
 import { database } from '../../services/firebaseConfig.js';
+import css from './FormBook.module.css';
 
 const schema = yup.object().shape({
   reason: yup.string().required('Please select a reason'),
@@ -48,53 +49,96 @@ const FormBook = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2>Book trial lesson</h2>
-      <p>Оберіть основну причину вивчення англійської:</p>
+      <h2 className={css.formBookTitle}>Book trial lesson</h2>
 
-      <label>
+      <div className={css.formBookRadioWrapp}>
+        <label className={css.formBookRadioLabel}>
+          <input
+            className={css.formBookRadioInput}
+            type="radio"
+            value="Career and business"
+            {...register('reason')}
+          />
+          <span className={css.formBookRadioSpan}></span>
+          Career and business
+        </label>
+
+        <label className={css.formBookRadioLabel}>
+          <input
+            className={css.formBookRadioInput}
+            type="radio"
+            value="Lesson for kids"
+            {...register('reason')}
+          />
+          <span className={css.formBookRadioSpan}></span>
+          Lesson for kids
+        </label>
+
+        <label className={css.formBookRadioLabel}>
+          <input
+            className={css.formBookRadioInput}
+            type="radio"
+            value="Living abroad"
+            {...register('reason')}
+          />
+          <span className={css.formBookRadioSpan}></span>
+          Living abroad
+        </label>
+
+        <label className={css.formBookRadioLabel}>
+          <input
+            className={css.formBookRadioInput}
+            type="radio"
+            value="Exams and coursework"
+            {...register('reason')}
+          />
+          <span className={css.formBookRadioSpan}></span>
+          Exams and coursework
+        </label>
+
+        <label className={css.formBookRadioLabel}>
+          <input
+            className={css.formBookRadioInput}
+            type="radio"
+            value="Culture, travel or hobby"
+            {...register('reason')}
+          />
+          <span className={css.formBookRadioSpan}></span>
+          Culture, travel or hobby
+        </label>
+
+        <p className={css.errorFormBook}>{errors.reason?.message}</p>
+      </div>
+
+      <div className={css.formBookInputWrapp}>
         <input
-          type="radio"
-          value="Career and business"
-          {...register('reason')}
+          className={css.formBookInput}
+          type="text"
+          placeholder="Full Name"
+          {...register('fullName')}
         />
-        Career and business
-      </label>
-      <label>
-        <input type="radio" value="Lesson for kids" {...register('reason')} />
-        Lesson for kids
-      </label>
-      <label>
-        <input type="radio" value="Living abroad" {...register('reason')} />
-        Living abroad
-      </label>
-      <label>
+        <p className={css.errorFormBook}>{errors.fullName?.message}</p>
+
         <input
-          type="radio"
-          value="Exams and coursework"
-          {...register('reason')}
+          className={css.formBookInput}
+          type="email"
+          placeholder="Email"
+          {...register('email')}
         />
-        Exams and coursework
-      </label>
-      <label>
+        <p className={css.errorFormBook}>{errors.email?.message}</p>
+
         <input
-          type="radio"
-          value="Culture, travel or hobby"
-          {...register('reason')}
+          className={css.formBookInput}
+          type="tel"
+          placeholder="Phone number"
+          {...register('phone')}
         />
-        Culture, travel or hobby
-      </label>
-      <p>{errors.reason?.message}</p>
+        <p className={css.errorFormBook}>{errors.phone?.message}</p>
+      </div>
 
-      <input type="text" placeholder="Full Name" {...register('fullName')} />
-      <p>{errors.fullName?.message}</p>
-
-      <input type="email" placeholder="Email" {...register('email')} />
-      <p>{errors.email?.message}</p>
-
-      <input type="tel" placeholder="Phone number" {...register('phone')} />
-      <p>{errors.phone?.message}</p>
-
-      <button type="submit">Book</button>
+      <button className={css.formBookBtn} type="submit">
+        Book
+      </button>
     </form>
   );
 };
