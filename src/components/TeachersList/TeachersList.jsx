@@ -77,10 +77,13 @@ const TeachersList = ({ item }) => {
                     height="96"
                     alt="User profile photo"
                   />
+                  <span className={css.teachersListImgSpan}></span>
                 </div>
+
                 <div className={css.teachersDescription}>
                   <div className={css.teachersLanguagesWrapp}>
                     <p className={css.teachersLanguagesText}>Languages</p>
+
                     <ul className={css.teachersRatingList}>
                       <li className={css.teachersRatingItem}>
                         <GoBook className={css.iconBookOpen} />
@@ -121,9 +124,9 @@ const TeachersList = ({ item }) => {
                     </button>
                   </div>
 
-                  <p className={css.teachersListName}>
+                  <h3 className={css.teachersListName}>
                     {teacher.name + ' ' + teacher.surname}
-                  </p>
+                  </h3>
 
                   <ul className={css.teachersListTextList}>
                     <li>

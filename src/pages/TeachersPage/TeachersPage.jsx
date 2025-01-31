@@ -4,12 +4,15 @@ import { database } from '../../services/firebaseConfig.js';
 import { child, get, ref } from 'firebase/database';
 import Container from '../../components/Container/Container.jsx';
 import css from './TeachersPage.module.css';
+import Filter from '../../components/Filter/Filter.jsx';
+import { useSelector } from 'react-redux';
 
 const TEACHERS_COLLECTION = 'teachers';
 const TEACHERS_PER_PAGE = 4;
 
 const TeachersPage = () => {
   const [teachers, setTeachers] = useState([]);
+  const filter = useSelector(state => state.filter.filterTeachers);
   const [count, setCount] = useState(TEACHERS_PER_PAGE);
   const dbRef = ref(database);
   const [isLoading, setIsLoading] = useState(false);
@@ -42,15 +45,20 @@ const TeachersPage = () => {
   return (
     <section className={css.teachersPage}>
       <Container>
-        <TeachersList item={limitedTeachers} />
-        {count <= teachers.length && (
-          <button
-            className={css.teachersPageLoadMore}
-            type="button"
-            onClick={handleMoreButtonClick}
-          >
-            {isLoading ? 'Loading...' : 'Load more'}
-          </button>
+        <Filter />
+        {filter.length === 0 && (
+          <>
+            <TeachersList item={limitedTeachers} />
+            {count <= teachers.length && (
+              <button
+                className={css.teachersPageLoadMore}
+                type="button"
+                onClick={handleMoreButtonClick}
+              >
+                {isLoading ? 'Loading...' : 'Load more'}
+              </button>
+            )}
+          </>
         )}
       </Container>
     </section>
