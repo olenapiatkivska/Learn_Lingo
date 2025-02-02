@@ -177,8 +177,8 @@ const Filter = () => {
   return (
     <>
       <div className={css.filterContainer}>
-        <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
-          <InputLabel>Language</InputLabel>
+        <FormControl sx={{ marginRight: '20px', minWidth: 221 }} size="small">
+          <p className={css.formControlTitle}>Language</p>
           <Input value={options.language} onChange={handleClickLanguage}>
             {languages.map((options, index) => (
               <MenuItem value={options} key={index}>
@@ -187,8 +187,8 @@ const Filter = () => {
             ))}
           </Input>
         </FormControl>
-        <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
-          <InputLabel>Levels of knowledge</InputLabel>
+        <FormControl sx={{ marginRight: '20px', minWidth: 198 }} size="small">
+          <p className={css.formControlTitle}>Levels of knowledge</p>
           <Input value={options.levels} onChange={handleClickLevel}>
             {levels.map((options, index) => (
               <MenuItem value={options} key={index}>
@@ -197,8 +197,8 @@ const Filter = () => {
             ))}
           </Input>
         </FormControl>
-        <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
-          <InputLabel>Price</InputLabel>
+        <FormControl sx={{ marginRight: '20px', minWidth: 124 }} size="small">
+          <p className={css.formControlTitle}>Price</p>
           <Input value={options.price || ''} onChange={handleClickPrice}>
             {price.map((options, index) => (
               <MenuItem value={options} key={index}>
@@ -209,13 +209,13 @@ const Filter = () => {
         </FormControl>
 
         {Object.values(options).join('') !== '' && (
-          <Button
-            className={css.filterContainerBtnClear}
+          <button
             type="button"
+            className={css.filterContainerBtnClear}
             onClick={clearFilter}
           >
             <TiDelete className={css.filterContainerBtnSvg} />
-          </Button>
+          </button>
         )}
       </div>
       {filter.length === 0 && search && (

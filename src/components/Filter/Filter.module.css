@@ -1,10 +1,19 @@
 .filterContainer {
   display: flex;
+
   margin-left: 64px;
 }
 
+.formControlTitle {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+  color: #8a8a89;
+  margin-bottom: 8px;
+}
+
 .filterContainerBtnClear {
-  all: unset;
   cursor: pointer;
   background-color: transparent;
   border: none;
@@ -12,19 +21,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 23px 0px 0px;
+  transition: color 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .filterContainerBtnSvg {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
 }
 
 .filterContainerBtnClear:hover .filterContainerBtnSvg {
   color: #f0aa8d;
   fill: #f0aa8d;
-  background-color: transparent;
 }
 
 .filterContainerFound {
