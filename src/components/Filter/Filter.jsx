@@ -10,13 +10,7 @@ import {
 } from '../../redux/SlicefFlter.js';
 import TeachersList from '../TeachersList/TeachersList.jsx';
 import { TiDelete } from 'react-icons/ti';
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Button,
-} from '@mui/material';
+import { FormControl, MenuItem, Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import css from './Filter.module.css';
 
