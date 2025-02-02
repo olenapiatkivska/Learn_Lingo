@@ -85,14 +85,16 @@ const Header = () => {
               Teachers
             </NavLink>
 
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? `${css.link} ${css.activeLink}` : css.link
-              }
-              to="/favorites"
-            >
-              Favorites
-            </NavLink>
+            {authUser && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? `${css.link} ${css.activeLink}` : css.link
+                }
+                to="/favorites"
+              >
+                Favorites
+              </NavLink>
+            )}
           </nav>
 
           {!user ? (

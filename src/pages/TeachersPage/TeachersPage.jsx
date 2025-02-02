@@ -6,6 +6,7 @@ import Container from '../../components/Container/Container.jsx';
 import css from './TeachersPage.module.css';
 import Filter from '../../components/Filter/Filter.jsx';
 import { useSelector } from 'react-redux';
+import Loader from '../../components/Loader/Loader.jsx';
 
 const TEACHERS_COLLECTION = 'teachers';
 const TEACHERS_PER_PAGE = 4;
@@ -16,6 +17,7 @@ const TeachersPage = () => {
   const [count, setCount] = useState(TEACHERS_PER_PAGE);
   const dbRef = ref(database);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDebouncing, setIsDebouncing] = useState(false);
 
   useEffect(() => {
     async function fetchTeachers() {
@@ -36,8 +38,13 @@ const TeachersPage = () => {
   }, [dbRef]);
 
   const handleMoreButtonClick = () => {
-    if (count >= teachers.length) return;
+    if (isDebouncing || count >= teachers.length) return;
+    setIsDebouncing(true);
     setCount(prevCount => prevCount + TEACHERS_PER_PAGE);
+
+    setTimeout(() => {
+      setIsDebouncing(false);
+    }, 300);
   };
 
   const limitedTeachers = teachers.slice(0, count);
@@ -46,16 +53,18 @@ const TeachersPage = () => {
     <section className={css.teachersPage}>
       <Container>
         <Filter />
-        {filter.length === 0 && (
+        {isLoading && <Loader />}
+        {!isLoading && filter.length === 0 && (
           <>
             <TeachersList item={limitedTeachers} />
+
             {count <= teachers.length && (
               <button
                 className={css.teachersPageLoadMore}
                 type="button"
                 onClick={handleMoreButtonClick}
               >
-                {isLoading ? 'Loading...' : 'Load more'}
+                Load more
               </button>
             )}
           </>

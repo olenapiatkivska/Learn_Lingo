@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from './Loader/Loader.jsx';
+import PrivateRoute from './PrivateRoute/PrivateRoute.jsx';
 
 const Layout = lazy(() => import('./Layout.jsx'));
 const HomePage = lazy(() => import('../pages/HomePage/HomePage.jsx'));
@@ -24,7 +25,14 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
             <Route path="teachers" element={<TeachersPage />} />
-            <Route path="favorites" element={<FavoritesPage />} />
+            <Route
+              path="favorites"
+              element={
+                <PrivateRoute>
+                  <FavoritesPage />
+                </PrivateRoute>
+              }
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

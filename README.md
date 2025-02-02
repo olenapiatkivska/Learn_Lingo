@@ -52,7 +52,7 @@ more".
 
 **Frontend**: React, React Router, Context API/Redux. **Firebase**: Realtime
 Database для викладачів, Authentication для користувачів. **Форми**:
-react-hook-form, yup. **Хостинг**: Netlify/Vercel.
+react-hook-form, yup. **Хостинг**: Vercel.
 
 ## Інформація про автора
 

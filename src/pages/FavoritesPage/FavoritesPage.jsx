@@ -11,11 +11,9 @@ const FavoritesPage = () => {
     <section className={css.favoritesPage}>
       <Container>
         <TeachersList item={favorite} />
-
         {favorite.length === 0 && (
-          <p className={css.noFavorites}>
-            No favorite teachers yet. <br />
-            Access for authorized users only.
+          <p className={css.notFavorites}>
+            You have not added teachers to your favorites yet.
           </p>
         )}
       </Container>

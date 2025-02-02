@@ -51,6 +51,7 @@ const TeachersList = ({ item }) => {
   const handelClick = id => {
     if (!authUser) {
       toast.warning('This feature is available only for authorized users.');
+      return;
     }
 
     const isFavorite = favorite.find(item => item.id === id);

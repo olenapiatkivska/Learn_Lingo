@@ -24,6 +24,7 @@ const schema = yup.object().shape({
 const LoginForm = ({ onClose }) => {
   const [visibility, setVisibility] = useState(false);
   const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -34,6 +35,7 @@ const LoginForm = ({ onClose }) => {
   });
 
   const onSubmit = async data => {
+    setIsSubmitting(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -47,6 +49,8 @@ const LoginForm = ({ onClose }) => {
     } catch (e) {
       toast.error('Invalid credentials. Try again!');
       console.error(e);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -94,7 +98,7 @@ const LoginForm = ({ onClose }) => {
         <button
           className={css.loginFormBtn}
           type="submit"
-          // disabled={isSubmitting}
+          disabled={isSubmitting}
         >
           Log In
         </button>

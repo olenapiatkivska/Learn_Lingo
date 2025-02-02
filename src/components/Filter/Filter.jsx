@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import css from './Filter.module.css';
 import { useLocation } from 'react-router-dom';
 import { onValue, orderByChild, query, ref } from 'firebase/database';
 import { database } from '../../services/firebaseConfig.js';
@@ -19,7 +18,7 @@ import {
   Button,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Container from '../Container/Container.jsx';
+import css from './Filter.module.css';
 
 const levels = [
   'A1 Beginner',
@@ -78,7 +77,7 @@ const Filter = () => {
   const handleClickLanguage = useCallback(
     event => {
       const selectedLanguage = event.target.value;
-      //   setOptions(prev => ({ ...prev, language: selectedLanguage }));
+
       setOptions(prev => ({
         ...prev,
         language: selectedLanguage,
@@ -178,49 +177,55 @@ const Filter = () => {
   return (
     <>
       <div className={css.filterContainer}>
-        <Container>
-          <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
-            <InputLabel>Language</InputLabel>
-            <Input value={options.language} onChange={handleClickLanguage}>
-              {languages.map((options, index) => (
-                <MenuItem value={options} key={index}>
-                  {options}
-                </MenuItem>
-              ))}
-            </Input>
-          </FormControl>
-          <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
-            <InputLabel>Levels of knowledge</InputLabel>
-            <Input value={options.levels} onChange={handleClickLevel}>
-              {levels.map((options, index) => (
-                <MenuItem value={options} key={index}>
-                  {options}
-                </MenuItem>
-              ))}
-            </Input>
-          </FormControl>
-          <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
-            <InputLabel>Price</InputLabel>
-            <Input value={options.price || ''} onChange={handleClickPrice}>
-              {price.map((options, index) => (
-                <MenuItem value={options} key={index}>
-                  {options}
-                </MenuItem>
-              ))}
-            </Input>
-          </FormControl>
+        <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
+          <InputLabel>Language</InputLabel>
+          <Input value={options.language} onChange={handleClickLanguage}>
+            {languages.map((options, index) => (
+              <MenuItem value={options} key={index}>
+                {options}
+              </MenuItem>
+            ))}
+          </Input>
+        </FormControl>
+        <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
+          <InputLabel>Levels of knowledge</InputLabel>
+          <Input value={options.levels} onChange={handleClickLevel}>
+            {levels.map((options, index) => (
+              <MenuItem value={options} key={index}>
+                {options}
+              </MenuItem>
+            ))}
+          </Input>
+        </FormControl>
+        <FormControl sx={{ marginRight: '20px', minWidth: 220 }} size="small">
+          <InputLabel>Price</InputLabel>
+          <Input value={options.price || ''} onChange={handleClickPrice}>
+            {price.map((options, index) => (
+              <MenuItem value={options} key={index}>
+                {options}
+              </MenuItem>
+            ))}
+          </Input>
+        </FormControl>
 
-          {Object.values(options).join('') !== '' && (
-            <Button type="button" onClick={clearFilter}>
-              <TiDelete />
-              Clear
-            </Button>
-          )}
-
-          {filter.length === 0 && search && <p>No teachers found.</p>}
-          <TeachersList item={filter} />
-        </Container>
+        {Object.values(options).join('') !== '' && (
+          <Button
+            className={css.filterContainerBtnClear}
+            type="button"
+            onClick={clearFilter}
+          >
+            <TiDelete className={css.filterContainerBtnSvg} />
+          </Button>
+        )}
       </div>
+      {filter.length === 0 && search && (
+        <p className={css.filterContainerFound}>
+          Unfortunately, we did not find any teachers according to the specified
+          criteria.
+        </p>
+      )}
+
+      <TeachersList item={filter} />
     </>
   );
 };

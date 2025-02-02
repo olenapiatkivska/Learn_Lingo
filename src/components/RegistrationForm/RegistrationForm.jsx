@@ -28,6 +28,7 @@ const schema = yup.object().shape({
 const RegistrationForm = ({ onClose }) => {
   const [visibility, setVisibility] = useState(false);
   const dispatch = useDispatch();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     document.body.classList.add('modal-open');
@@ -47,6 +48,7 @@ const RegistrationForm = ({ onClose }) => {
   const [error, setError] = useState(null);
 
   const onSubmit = async data => {
+    setIsSubmitting(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -59,6 +61,8 @@ const RegistrationForm = ({ onClose }) => {
     } catch (error) {
       setError('Failed to register. Please try again.');
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -108,7 +112,11 @@ const RegistrationForm = ({ onClose }) => {
           <p className={css.error}>{errors.password.message}</p>
         )}
         {error && <p className={css.error}>{error}</p>}
-        <button type="submit" className={css.registrationBtnSignUp}>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className={css.registrationBtnSignUp}
+        >
           Sign Up
         </button>
       </form>

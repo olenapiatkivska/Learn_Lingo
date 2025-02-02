@@ -5,6 +5,7 @@ import { ref, push } from 'firebase/database';
 import { auth } from '../../services/firebaseConfig.js';
 import { database } from '../../services/firebaseConfig.js';
 import css from './FormBook.module.css';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
   reason: yup.string().required('Please select a reason'),
@@ -32,7 +33,7 @@ const FormBook = () => {
     const user = auth.currentUser;
 
     if (!user) {
-      alert('Будь ласка, увійдіть у систему, щоб забронювати урок.');
+      toast.warn('Please log in to book a lesson.');
       return;
     }
 
@@ -40,10 +41,10 @@ const FormBook = () => {
       const userBookingsRef = ref(database, `users/${user.uid}/bookings`);
       await push(userBookingsRef, data);
 
-      alert('Запис успішний!');
+      toast.success('Booking successful!');
     } catch (error) {
-      console.error('Помилка запису:', error);
-      alert('Помилка бронювання, спробуйте ще раз.');
+      console.error('Booking error:', error);
+      toast.error('Booking failed, please try again.');
     }
   };
 

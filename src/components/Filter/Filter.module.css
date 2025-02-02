@@ -1,2 +1,37 @@
 .filterContainer {
+  display: flex;
+  margin-left: 64px;
+}
+
+.filterContainerBtnClear {
+  all: unset;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.filterContainerBtnSvg {
+  width: 26px;
+  height: 26px;
+}
+
+.filterContainerBtnClear:hover .filterContainerBtnSvg {
+  color: #f0aa8d;
+  fill: #f0aa8d;
+  background-color: transparent;
+}
+
+.filterContainerFound {
+  margin-top: 32px;
+  margin-left: 64px;
+  color: #ca0000ba;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
 }
