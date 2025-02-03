@@ -13,6 +13,13 @@
   display: flex;
   align-items: center;
   text-decoration: none;
+  text-shadow: none;
+  transition: text-shadow 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.linkLogo:hover,
+.linkLogo:focus {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .iconLogo {
