@@ -1,7 +1,7 @@
 import FormBook from './FormBook.jsx';
 import css from './BookLesson.module.css';
 
-const BookLesson = ({ teacher }) => {
+const BookLesson = ({ teacher, onClose }) => {
   return (
     <>
       <h2 className={css.bookLessonTitle}>Book trial lesson</h2>
@@ -26,7 +26,7 @@ const BookLesson = ({ teacher }) => {
           </p>
         </div>
       </div>
-      <FormBook />
+      <FormBook onClose={onClose} />
     </>
   );
 };

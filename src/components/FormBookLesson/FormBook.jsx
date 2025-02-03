@@ -20,11 +20,12 @@ const schema = yup.object().shape({
     .required('Phone number is required'),
 });
 
-const FormBook = () => {
+const FormBook = ({ onClose }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -42,6 +43,8 @@ const FormBook = () => {
       await push(userBookingsRef, data);
 
       toast.success('Booking successful!');
+      reset();
+      onClose();
     } catch (error) {
       console.error('Booking error:', error);
       toast.error('Booking failed, please try again.');

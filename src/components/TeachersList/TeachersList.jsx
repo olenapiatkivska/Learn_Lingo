@@ -189,7 +189,7 @@ const TeachersList = ({ item }) => {
 
         {modalState.isOpen && modalState.name === 'bookLesson' && (
           <Modal isOpen={modalState.isOpen} onClose={closeModal}>
-            <BookLesson teacher={teacher} />
+            <BookLesson teacher={teacher} onClose={closeModal} />
           </Modal>
         )}
       </Container>
